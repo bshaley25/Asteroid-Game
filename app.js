@@ -4,14 +4,17 @@ canvas.height = (window.innerHeight * .8)
 document.body.appendChild(canvas)
 const c = canvas.getContext('2d')
 
-let img = new Image();
-img.src = './img/animated_asteroid2.png';
-img.onload = function() {
+let asteriodImg = new Image();
+asteriodImg.src = './img/animated_asteroid2.png';
+asteriodImg.onload = function() {
     animate();
 };
 
+let shipImage = new Image()
+shipImage.src = './img/spaceShip.png'
+
 const asteriodArray = []
-const astroidNumber = 20
+const astroidNumber = 3
 const scale = 1;
 const width = 60;
 const height = 60;
@@ -20,17 +23,21 @@ const scaledHeight = scale * height;
 const windowWidthScale = (window.innerWidth * .15)
 const windowHeightScale = (window.innerHeight * .1)
 
-const mouse = {
-    x: undefined,
-    y: undefined
+const shipScale = 1;
+const shipWidth = 64;
+const shipeHeight = 64;
+const shipScaledWidth =  shipScale * shipWidth;
+const shipScaledHeight = shipScale * shipeHeight;
+
+
+const controller = {
+    button: undefined
 }
 
-canvas.addEventListener('mousemove', function(event){
-    mouse.x = (event.x - windowWidthScale);
-    mouse.y = (event.y - windowHeightScale)
-    console.log(mouse.x, mouse.y)
+document.addEventListener('keydown', function(event) {
+    controller.button = event.key
+    // console.log(controller.button)
 })
-
 
 for(let i=0;i<astroidNumber;i++) {
     let x = (Math.random() * (canvas.width - (width*2)) + (width*2))
@@ -47,12 +54,8 @@ for(let i=0;i<astroidNumber;i++) {
 }
 
 
-function clearCanvas() {
-    c.clearRect(0,0,canvas.width, canvas.height)
-}
-
 function Asteriod( x, y, dx, dy, frameX, frameY, spinSpeed, frameNumber) {
-
+    
     this.x = x
     this.y = y
     this.dx = dx
@@ -61,11 +64,11 @@ function Asteriod( x, y, dx, dy, frameX, frameY, spinSpeed, frameNumber) {
     this.frameY = frameY
     this.spinSpeed = spinSpeed
     this.frameNumber = frameNumber
-
+    
     this.draw = function() {
-        c.drawImage(img, width * frameX, height*frameY, width, height, (x - width/2), (y - height/2) , scaledWidth, scaledHeight);
+        c.drawImage(asteriodImg, width * frameX, height * frameY, width, height, (x - width/2), (y - height/2) , scaledWidth, scaledHeight);
     }
-
+    
     this.update = function() {
         
         
@@ -90,6 +93,56 @@ function Asteriod( x, y, dx, dy, frameX, frameY, spinSpeed, frameNumber) {
     }
 }
 
+
+function Ship(x,y,dx,dy, frameX, frameY) {
+
+    this.x = x
+    this.y = y
+    this.dx = dx 
+    this.dy = dy
+    this.frameX = frameX
+    this.frameY = frameY
+
+    this.draw = function() {
+        c.drawImage(shipImage, shipWidth * frameX, shipWidth * frameY, shipWidth, shipeHeight, (x - shipWidth/2), (y - shipeHeight/2), shipScaledWidth, shipScaledHeight);
+    }
+
+    this.update = function () {
+
+
+        if (controller.button === "ArrowRight") {
+            frameX++
+            if (frameX == 6) {
+                frameX = 0
+                frameY++  //go to next line once the first sprite sheet row has been exhuasted
+                if(frameY == 12){
+                    frameY = 0
+                }
+            }
+        }
+
+        if (controller.button === "ArrowLeft") {
+            frameX--
+            if (frameX == 0) {
+                frameX = 5
+                frameY--   //go to previous line once the first sprite sheet row has been exhuasted
+                if(frameY == -1){
+                    frameY = 11
+                }
+            }
+        }
+
+
+
+    }
+
+}
+
+
+function clearCanvas() {
+    c.clearRect(0,0,canvas.width, canvas.height)
+}
+
 function asteriodAnimate() {
 
     asteriodArray.forEach(asteriod => {
@@ -97,137 +150,26 @@ function asteriodAnimate() {
         asteriod.update()
     });
 
-    a2.draw()
-    a2.update()
+    s1.draw()
+    s1.update()
 
 }
 
-const a2 = new Asteriod(100,100,0,0,0,0,0)
+function clearController() {
+    controller.button = undefined
+}
 
+const s1 = new Ship(100,100,0,0,0,0)
 
 function animate() {
+
 
     clearCanvas()
 
     asteriodAnimate()
-
-    // c.drawImage(img, 0, 0, width, height, 100, 100, scaledWidth, scaledHeight);
-    // c.drawImage(img, 0, 60, width, height, 100, 100, scaledWidth, scaledHeight);
-    
-
+    clearController()
 
     requestAnimationFrame(animate)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const canvas = document.createElement('canvas')
-// canvas.width = window.innerWidth
-// canvas.height = window.innerHeight
-// document.body.appendChild(canvas)
-// const c = canvas.getContext('2d')
-
-// let img = new Image();
-// img.src = "animated_asteroid2.png";
-
-// c.beginPath()
-// c.drawImage(img, 0, 0, 60, 60, 200, 200, 60, 60);
-// c.stroke()
-
-
-// function BallImg (x, y, dx, dy, img) {
-//     this.x = x
-//     this.y = x
-//     this.dx = dx
-//     this.dy = dy
-//     this.img = img
-
-//     this.drawImage = function() {
-//         c.beginPath()
-//         // c.drawImage(img, 0, 0, 60, 60, 200, 200, 60, 60);
-//         // c.drawImage(img, x, y) //This is for the img
-//         c.arc(x, y, 20, 0, 2 * Math.PI)
-//         // c.fill()
-//         c.stroke()
-//     }
-
-//     this.update = function() {
-//         x += dx
-//         y += dy
-        
-//         if(x < (0 + 20) || x > (canvas.width - 20)) {
-//             dx *= -1
-//         }  else if(y < (0 + 20) || y > (canvas.height - 20)) {
-//             dy *= -1
-//         }
-//     }
-
-// }
-
-// let butt = new BallImg(500,400,4,2,1)
-
-// const mouse = {
-//     x: undefined,
-//     y: undefined
-// }
-// canvas.addEventListener('mousemove', function(event) {
-//     mouse.x = event.x;
-//     mouse.y = event.y;
-// })
-
-// function clearCanvas() {
-//     c.clearRect(0,0,canvas.width, canvas.height)
-// }
-
-// function boxAnimation() {
-//     butt.drawImage()
-//     butt.update()
-// }
-
-
-// function mouseAnimation() {
-//     c.beginPath()
-//     c.drawImage(mouseImg, mouse.x-(mouseImg.width/2), mouse.y-(mouseImg.height/2))
-//     c.stroke()
-// }
-
-
-
-
-
-
-// function animate() {
-
-//     clearCanvas()
-
-//     boxAnimation()
-
-//     requestAnimationFrame(animate)
-
-//     c.beginPath()
-//     c.drawImage(img, 0, 0, 60, 60, 200, 200, 60, 60);
-//     c.stroke()
-// }
-
-// animate()

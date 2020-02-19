@@ -1,0 +1,24 @@
+body {
+    margin: 0;
+    background-color: bisque;
+}
+
+nav {
+    display: flex;
+    height: 20%;
+    width: 100%;
+}
+
+canvas {
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    height: 60%;
+    width: 70%;
+
+    background-image: url('./img/spacebackground.jpg');
+    border-style: solid;
+    border-radius: 5px;
+}

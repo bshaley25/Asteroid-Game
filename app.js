@@ -1,8 +1,10 @@
-const canvas = document.createElement('canvas')
+let canvas = document.createElement('canvas')
 canvas.width = (window.innerWidth * .7)
 canvas.height = (window.innerHeight * .8)
 document.body.appendChild(canvas)
 const c = canvas.getContext('2d')
+
+console.log('butt')
 
 let asteriodImg = new Image();
 asteriodImg.src = './img/animated_asteroid2.png';
@@ -13,8 +15,10 @@ shipImage.src = './img/spaceShip.png'
 let explostionImage = new Image()
 explostionImage.src = './img/boom3.png'
 
+console.log(document.querySelector('#quantity').value)
+
 let asteriodArray = []
-const astroidNumber = 3
+let astroidNumber = document.querySelector('#quantity').value
 const scale = 1;
 const width = 60;
 const height = 60;
@@ -28,7 +32,7 @@ const shipWidth = 64;
 const shipeHeight = 64;
 const shipScaledWidth =  shipScale * shipWidth;
 const shipScaledHeight = shipScale * shipeHeight;
-const shipMaxDxDy = 10;
+const shipMaxDxDy = 20;
 
 const explostionScale = 1;
 const explostionWidth = 128;
@@ -66,6 +70,8 @@ function makeAsteriods() {
         let frameNumber = Math.floor( Math.random()* 6 )
         
         asteriodArray.push( new Asteriod(x,y,dx,dy,frameX,frameY, spinSpeed, frameNumber) )
+
+        // console.log("IN MAKE ASTERIODS",x,y,dx,dy)
     }
 }
 
@@ -106,10 +112,13 @@ function Asteriod( x, y, dx, dy, frameX, frameY, spinSpeed, frameNumber) {
         if( (Math.abs(controller.shipX - x) < 40) && (Math.abs(controller.shipY - y) < 40) ) {
             controller.crashed = true
         }
+
         
         frameNumber++
         x+=dx
         y+=dy
+
+        // console.log("IN UPDATE", x,y,dx,dy)
         
     }
 }
@@ -163,8 +172,8 @@ function Ship(x,y,dx,dy, frameX, frameY) {
         
         if(controller.button === "ArrowUp") {
             // console.log(theta, Math.sin(theta), Math.cos(theta), dx, dy)
-            dx += Math.sin(theta) * .2
-            dy -= Math.cos(theta) * .2
+            dx += Math.sin(theta) * .3
+            dy -= Math.cos(theta) * .3
 
             if(Math.sign(dx) === 1 && dx > shipMaxDxDy) {
                 dx = shipMaxDxDy
@@ -182,17 +191,20 @@ function Ship(x,y,dx,dy, frameX, frameY) {
         
         if(controller.button === "ArrowDown") {
 
-            if(Math.sign(dx) === 1) {
-                dx -= .5
-            } else if (Math.sign(dx) === -1) {
-                dx += .5
-            }
+            // if(Math.sign(dy) === 1) {
+            //     dy *= .5
+            // } else if (Math.sign(dy) === -1) {
+            //     dy *= .5
+            // }
+            // if(Math.sign(dx) === 1) {
+            //     dx -= .8
+            // } else if (Math.sign(dx) === -1) {
+            //     dx += .8
+            // }
 
-            if(Math.sign(dy) === 1) {
-                dy *= .5
-            } else if (Math.sign(dy) === -1) {
-                dy *= .5
-            }
+            dx=0
+            dy=0
+
         }
         
         if (x > window.innerWidth * .7 ) {
@@ -232,7 +244,6 @@ function Explostion(x,y,frameX,frameY) {
             }
         }
     }
-
 }
 
 
@@ -244,7 +255,6 @@ function clearCanvas() {
 function gameAnimate() {
 
     if (!controller.crashed) {
-        
         asteriodArray.forEach(asteriod => {
             asteriod.draw()
             asteriod.update()
@@ -264,13 +274,15 @@ function clearController() {
 }
 
 function animate() {
-     
+    
     clearCanvas()
     
     gameAnimate()
     clearController()
-
+    
     requestAnimationFrame(animate)
+    
+    console.log(then - now)
     
 }
 
@@ -278,9 +290,13 @@ const restartButton = document.querySelector(".start")
 
 restartButton.addEventListener("click", () => {
 
+    // cancelAnimationFrame(animate)
+    astroidNumber = document.querySelector('#quantity').value
     controller.crashed = false
     asteriodArray = []
     s1 = new Ship(100, 100, 0, 0, 0, 0)
     makeAsteriods()
     animate()
+
+
 })

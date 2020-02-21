@@ -4,8 +4,6 @@ canvas.height = (window.innerHeight * .8)
 document.body.appendChild(canvas)
 const c = canvas.getContext('2d')
 
-console.log('butt')
-
 let asteriodImg = new Image();
 asteriodImg.src = './img/animated_asteroid2.png';
 
@@ -48,7 +46,7 @@ const controller = {
     shipX: undefined,
     shipY: undefined, 
     crashed: false,
-    gameId: undefined
+    // gameId: undefined
 }
 
 document.addEventListener('keydown', function(event) {
@@ -118,7 +116,7 @@ function Asteriod( x, y, dx, dy, frameX, frameY, spinSpeed, frameNumber) {
         x+=dx
         y+=dy
 
-        // console.log("IN UPDATE", x,y,dx,dy)
+        console.log("IN UPDATE",dx,dy)
         
     }
 }
@@ -191,19 +189,19 @@ function Ship(x,y,dx,dy, frameX, frameY) {
         
         if(controller.button === "ArrowDown") {
 
-            // if(Math.sign(dy) === 1) {
-            //     dy *= .5
-            // } else if (Math.sign(dy) === -1) {
-            //     dy *= .5
-            // }
-            // if(Math.sign(dx) === 1) {
-            //     dx -= .8
-            // } else if (Math.sign(dx) === -1) {
-            //     dx += .8
-            // }
+            if(Math.sign(dy) === 1) {
+                dy *= .5
+            } else if (Math.sign(dy) === -1) {
+                dy *= .5
+            }
+            if(Math.sign(dx) === 1) {
+                dx *= .5
+            } else if (Math.sign(dx) === -1) {
+                dx *= .5
+            }
 
-            dx=0
-            dy=0
+            // dx=0
+            // dy=0
 
         }
         
@@ -274,6 +272,8 @@ function clearController() {
 }
 
 function animate() {
+
+    // let now = Date.now()*10
     
     clearCanvas()
     
@@ -281,8 +281,10 @@ function animate() {
     clearController()
     
     requestAnimationFrame(animate)
+
+    // let then = Date.now()*10
     
-    console.log(then - now)
+    // console.log(then, now)
     
 }
 
@@ -297,6 +299,4 @@ restartButton.addEventListener("click", () => {
     s1 = new Ship(100, 100, 0, 0, 0, 0)
     makeAsteriods()
     animate()
-
-
 })

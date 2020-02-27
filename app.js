@@ -10,10 +10,12 @@ asteriodImg.src = './img/animated_asteroid2.png';
 let shipImage = new Image()
 shipImage.src = './img/spaceShip.png'
 
+// let ship = require('./ship')
+
 let explostionImage = new Image()
 explostionImage.src = './img/boom3.png'
 
-console.log(document.querySelector('#quantity').value)
+// console.log(document.querySelector('#quantity').value)
 
 let asteriodArray = []
 let astroidNumber = document.querySelector('#quantity').value
@@ -36,7 +38,9 @@ const explostionScale = 1;
 const explostionWidth = 128;
 const explostionHeight = 128;
 
-let s1 = new Ship(100, 100, 0, 0, 0, 0)
+// let s1 = new Ship(100, 100, 0, 0, 0, 0)
+
+
 
 const e1 = new Explostion(100,100,0,0)
 
@@ -110,7 +114,6 @@ function Asteriod( x, y, dx, dy, frameX, frameY, spinSpeed, frameNumber) {
         if( (Math.abs(controller.shipX - x) < 40) && (Math.abs(controller.shipY - y) < 40) ) {
             controller.crashed = true
         }
-
         
         frameNumber++
         x+=dx
@@ -122,102 +125,102 @@ function Asteriod( x, y, dx, dy, frameX, frameY, spinSpeed, frameNumber) {
 }
 
 
-function Ship(x,y,dx,dy, frameX, frameY) {
+// function Ship(x,y,dx,dy, frameX, frameY) {
     
-    this.x = x
-    this.y = y
-    this.dx = dx 
-    this.dy = dy 
-    this.frameX = frameX
-    this.frameY = frameY
+//     this.x = x
+//     this.y = y
+//     this.dx = dx 
+//     this.dy = dy 
+//     this.frameX = frameX
+//     this.frameY = frameY
     
-    this.draw = function() {
+//     this.draw = function() {
 
-        c.drawImage(shipImage, shipWidth * frameX, shipWidth * frameY, shipWidth, shipeHeight, (x - shipWidth/2), (y - shipeHeight/2), shipScaledWidth, shipScaledHeight);
-    }
+//         c.drawImage(shipImage, shipWidth * frameX, shipWidth * frameY, shipWidth, shipeHeight, (x - shipWidth/2), (y - shipeHeight/2), shipScaledWidth, shipScaledHeight);
+//     }
     
-    this.update = function () {
+//     this.update = function () {
         
-        let theta = (((5 * frameX) + (30 * frameY)) * Math.PI/180)
+//         let theta = (((5 * frameX) + (30 * frameY)) * Math.PI/180)
         
-        x+=dx
-        y+=dy
+//         x+=dx
+//         y+=dy
 
-        controller.shipX = x
-        controller.shipY = y
+//         controller.shipX = x
+//         controller.shipY = y
         
-        if (controller.button === "ArrowRight") {
-            frameX++
-            if (frameX == 6) {
-                frameX = 0
-                frameY++   //go to next line once the first sprite sheet row has been exhuasted
-                if(frameY == 12){
-                    frameY = 0
-                }
-            }
-        }
+//         if (controller.button === "ArrowRight") {
+//             frameX++
+//             if (frameX == 6) {
+//                 frameX = 0
+//                 frameY++   //go to next line once the first sprite sheet row has been exhuasted
+//                 if(frameY == 12){
+//                     frameY = 0
+//                 }
+//             }
+//         }
         
-        if (controller.button === "ArrowLeft") {
-            frameX--
-            if (frameX ==  -1) {
-                frameX = 5
-                frameY--   //go to previous line once the first sprite sheet row has been exhuasted
-                if(frameY == -1){
-                    frameY = 11
-                }
-            }
-        }
+//         if (controller.button === "ArrowLeft") {
+//             frameX--
+//             if (frameX ==  -1) {
+//                 frameX = 5
+//                 frameY--   //go to previous line once the first sprite sheet row has been exhuasted
+//                 if(frameY == -1){
+//                     frameY = 11
+//                 }
+//             }
+//         }
         
-        if(controller.button === "ArrowUp") {
-            // console.log(theta, Math.sin(theta), Math.cos(theta), dx, dy)
-            dx += Math.sin(theta) * .3
-            dy -= Math.cos(theta) * .3
+//         if(controller.button === "ArrowUp") {
+//             // console.log(theta, Math.sin(theta), Math.cos(theta), dx, dy)
+//             dx += Math.sin(theta) * .3
+//             dy -= Math.cos(theta) * .3
 
-            if(Math.sign(dx) === 1 && dx > shipMaxDxDy) {
-                dx = shipMaxDxDy
-            } else if (Math.sign(dx) === -1 && dx < -shipMaxDxDy) {
-                dx = -shipMaxDxDy
-            }
+//             if(Math.sign(dx) === 1 && dx > shipMaxDxDy) {
+//                 dx = shipMaxDxDy
+//             } else if (Math.sign(dx) === -1 && dx < -shipMaxDxDy) {
+//                 dx = -shipMaxDxDy
+//             }
 
-            if(Math.sign(dy) === 1 && dy > shipMaxDxDy) {
-                dy = shipMaxDxDy
-            } else if (Math.sign(dy) === -1 && dy < -shipMaxDxDy) {
-                dy = -shipMaxDxDy
-            }
+//             if(Math.sign(dy) === 1 && dy > shipMaxDxDy) {
+//                 dy = shipMaxDxDy
+//             } else if (Math.sign(dy) === -1 && dy < -shipMaxDxDy) {
+//                 dy = -shipMaxDxDy
+//             }
 
-        }
+//         }
         
-        if(controller.button === "ArrowDown") {
+//         if(controller.button === "ArrowDown") {
 
-            if(Math.sign(dy) === 1) {
-                dy *= .5
-            } else if (Math.sign(dy) === -1) {
-                dy *= .5
-            }
-            if(Math.sign(dx) === 1) {
-                dx *= .5
-            } else if (Math.sign(dx) === -1) {
-                dx *= .5
-            }
+//             // if(Math.sign(dy) === 1) {
+//             //     dy *= .5
+//             // } else if (Math.sign(dy) === -1) {
+//             //     dy *= .5
+//             // }
+//             // if(Math.sign(dx) === 1) {
+//             //     dx *= .5
+//             // } else if (Math.sign(dx) === -1) {
+//             //     dx *= .5
+//             // }
 
-            // dx=0
-            // dy=0
+//             dx *= .9
+//             dy *= .9
 
-        }
+//         }
         
-        if (x > window.innerWidth * .7 ) {
-            x = 0
-        } else if (x < 0) {
-            x = window.innerWidth * .7
-        }
+//         if (x > window.innerWidth * .7 ) {
+//             x = 0
+//         } else if (x < 0) {
+//             x = window.innerWidth * .7
+//         }
         
-        if (y > window.innerHeight * .8) {
-            y = 0
-        } else if (y < 0) {
-            y = window.innerHeight * .8
-        }
-    }
-}
+//         if (y > window.innerHeight * .8) {
+//             y = 0
+//         } else if (y < 0) {
+//             y = window.innerHeight * .8
+//         }
+//     }
+// }
 
 
 function Explostion(x,y,frameX,frameY) {
@@ -257,8 +260,12 @@ function gameAnimate() {
             asteriod.draw()
             asteriod.update()
         });
-        s1.draw()
-        s1.update()
+        // s1.draw()
+        // s1.update()
+
+        s2.draw()
+        s2.update()
+
     } else {
         e1.draw()
         e1.update()
@@ -276,11 +283,13 @@ function animate() {
     // let now = Date.now()*10
     
     clearCanvas()
-    
+
     gameAnimate()
     clearController()
+
+    setTimeout(animate, 20)
     
-    requestAnimationFrame(animate)
+    // requestAnimationFrame(animate)
 
     // let then = Date.now()*10
     
@@ -296,7 +305,8 @@ restartButton.addEventListener("click", () => {
     astroidNumber = document.querySelector('#quantity').value
     controller.crashed = false
     asteriodArray = []
-    s1 = new Ship(100, 100, 0, 0, 0, 0)
+    // s1 = new Ship(100, 100, 0, 0, 0, 0)
+    s2 = new Ship()
     makeAsteriods()
     animate()
 })

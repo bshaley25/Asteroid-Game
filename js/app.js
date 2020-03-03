@@ -13,6 +13,9 @@ shipImage.src = './img/spaceShip.png'
 let explImage = new Image()
 explImage.src = './img/boom3.png'
 
+let beamImage = new Image()
+beamImage.src = './img/beams.png'
+
 let asteriodArray = []
 let astroidNumber = document.querySelector('#quantity').value
 const scale = 1;
@@ -71,6 +74,9 @@ function gameAnimate() {
         e1.draw()
         e1.update()
     }
+
+    beam.draw()
+    
 }
 
 function clearController() {
@@ -83,6 +89,7 @@ function animate() {
     gameAnimate()
     clearController()
     requestAnimationFrame(animate)
+    console.log(controller.button)
 
 }
 
@@ -95,6 +102,7 @@ restartButton.addEventListener("click", () => {
     controller.crashed = false
     asteriodArray = []
     ship = new Ship()
+    beam = new Beam()
     makeAsteriods()
     animate()
 })

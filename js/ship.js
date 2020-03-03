@@ -57,6 +57,7 @@ class Ship {
             } else if (Math.sign(this.dy) === -1 && this.dy < -shipMaxDxDy) {
                 this.dy = -shipMaxDxDy
             }
+            
         } else if(controller.button === "ArrowDown") {
 
             this.dx *= .9

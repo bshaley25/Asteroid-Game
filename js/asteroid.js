@@ -27,7 +27,6 @@ class Asteriod {
         
         if(this.x < (width/2) || this.x > (canvas.width - (width/2))) {
             this.dx *= -1
-            
         }
         if(this.y < (height/2) || this.y > (canvas.height - (height/2))) {
             this.dy *= -1
@@ -36,6 +35,13 @@ class Asteriod {
         this.frameNumber++
         this.x += this.dx
         this.y += this.dy
+     
+        if( (Math.abs(ship.x - this.x) < 40) && (Math.abs(ship.y - this.y) < 40) ) {
+            e1.x = ship.x
+            e1.y = ship.y
+            controller.crashed = true
+        }
+
     }
 
 }

@@ -60,6 +60,10 @@ function clearCanvas() {
     c.clearRect(0,0,canvas.width, canvas.height)
 }
 
+function clearController() {
+    controller.button = undefined
+}
+
 function gameAnimate() {
 
     asteriodArray.forEach(asteriod => {
@@ -74,13 +78,7 @@ function gameAnimate() {
         e1.draw()
         e1.update()
     }
-
-    beam.draw()
     
-}
-
-function clearController() {
-    controller.button = undefined
 }
 
 function animate() {
@@ -88,8 +86,8 @@ function animate() {
     clearCanvas()
     gameAnimate()
     clearController()
-    requestAnimationFrame(animate)
-    console.log(controller.button)
+
+    localStorage.setItem('id', requestAnimationFrame(animate))
 
 }
 
@@ -97,7 +95,7 @@ const restartButton = document.querySelector(".start")
 
 restartButton.addEventListener("click", () => {
 
-    cancelAnimationFrame(animate)
+    cancelAnimationFrame(localStorage.id)
     astroidNumber = document.querySelector('#quantity').value
     controller.crashed = false
     asteriodArray = []
@@ -105,4 +103,6 @@ restartButton.addEventListener("click", () => {
     beam = new Beam()
     makeAsteriods()
     animate()
+
 })
+

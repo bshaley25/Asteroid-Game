@@ -1,6 +1,8 @@
-// const ship = require('./ship')
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 
-// console.log(ship)
+const Ship = require('./ship')
+
+console.log(Ship())
 
 let canvas = document.createElement('canvas')
 canvas.width = (window.innerWidth * .7)
@@ -60,16 +62,16 @@ function makeAsteriods() {
 
     for(let i=0;i<astroidNumber;i++) {
 
-        // let x = (Math.random() * (canvas.width - (width*2)) + (width*2))
-        // let y = (Math.random() * (canvas.height- (height*3)) + (height*2))
-        // let dx = (Math.random() * 10) - 5 
-        // let dy = (Math.random() * 10) - 5
-        // let frameX = Math.floor( Math.random() * 6 )
-        // let frameY = Math.floor( Math.random()* 1.99 )
-        // let spinSpeed = Math.floor( Math.random()* 10 ) + 3
-        // let frameNumber = Math.floor( Math.random()* 6 )
+        let x = (Math.random() * (canvas.width - (width*2)) + (width*2))
+        let y = (Math.random() * (canvas.height- (height*3)) + (height*2))
+        let dx = (Math.random() * 10) - 5 
+        let dy = (Math.random() * 10) - 5
+        let frameX = Math.floor( Math.random() * 6 )
+        let frameY = Math.floor( Math.random()* 1.99 )
+        let spinSpeed = Math.floor( Math.random()* 10 ) + 3
+        let frameNumber = Math.floor( Math.random()* 6 )
         
-        asteriodArray.push( new Asteriod() )
+        asteriodArray.push( new Asteriod(x,y,dx,dy,frameX,frameY, spinSpeed, frameNumber) )
 
         // console.log("IN MAKE ASTERIODS",x,y,dx,dy)
     }
@@ -205,7 +207,91 @@ restartButton.addEventListener("click", () => {
     controller.crashed = false
     asteriodArray = []
     // s1 = new Ship(100, 100, 0, 0, 0, 0)
-    s2 = new Ship()
+    s2 = new ship()
     makeAsteriods()
     animate()
 })
+
+},{"./ship":2}],2:[function(require,module,exports){
+class Ship {
+
+    constructor() {
+        this.x = 200 // x position
+        this.y = 200 // y position
+        this.dx = 0 // change in x
+        this.dy = 0 // change in y
+        this.fx = 0 // frame 
+        this.fy = 0
+        this.theta = undefined
+    }
+
+    draw() {
+        c.drawImage(shipImage, shipWidth * this.fx, shipWidth * this.fy, shipWidth, shipeHeight, (this.x - shipWidth/2), (this.y - shipeHeight/2), shipScaledWidth, shipScaledHeight);
+    }
+
+    update() {
+
+        this.theta = (((5 * this.fx) + (30 * this.fy)) * Math.PI/180)
+        
+        this.x += this.dx
+        this.y -= this.dy
+
+        if (controller.button === "ArrowRight") {
+
+            this.fx++
+            if (this.fx == 6) {
+                this.fx = 0
+                this.fy++   //go to next line in sprite sheet once the first sprite sheet row has been exhuasted
+                if(this.fy == 12){
+                    this.fy = 0
+                }
+            }
+
+        } else if (controller.button === "ArrowLeft") {
+            this.fx--
+            if (this.fx ==  -1) {
+                this.fx = 5
+                this.fy--   //go to previous line once the first sprite sheet row has been exhuasted
+                if(this.fy == -1){
+                    this.fy = 11
+                }
+            }
+        } else if(controller.button === "ArrowUp") {
+            
+            this.dx += Math.sin(this.theta) * .3
+            this.dy += Math.cos(this.theta) * .3
+
+            if(Math.sign(this.dx) === 1 && this.dx > shipMaxDxDy) {
+                this.dx = shipMaxDxDy
+            } else if (Math.sign(this.dx) === -1 && this.dx < -shipMaxDxDy) {
+                this.dx = -shipMaxDxDy
+            }
+
+            if(Math.sign(this.dy) === 1 && this.dy > shipMaxDxDy) {
+                this.dy = shipMaxDxDy
+            } else if (Math.sign(this.dy) === -1 && this.dy < -shipMaxDxDy) {
+                this.dy = -shipMaxDxDy
+            }
+        } else if(controller.button === "ArrowDown") {
+
+            this.dx *= .9
+            this.dy *= .9
+
+        }
+
+        if (this.x > window.innerWidth * .7 ) {
+            this.x = 0
+        } else if (this.x < 0) {
+            this.x = window.innerWidth * .7
+        }
+        
+        if (this.y > window.innerHeight * .8) {
+            this.y = 0
+        } else if (this.y < 0) {
+            this.y = window.innerHeight * .8
+        }
+    }
+}
+
+
+},{}]},{},[1]);

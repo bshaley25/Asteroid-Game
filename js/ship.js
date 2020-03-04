@@ -80,8 +80,6 @@ class Ship {
         } else if (this.y < 0) {
             this.y = window.innerHeight * .8
         }
-
-        
     }
 }
 

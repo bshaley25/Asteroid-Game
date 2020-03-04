@@ -63,6 +63,10 @@ class Ship {
             this.dx *= .9
             this.dy *= .9
 
+        } else if(controller.button === " ") {
+
+            beamArray.push( new Beam() )
+
         }
 
         if (this.x > window.innerWidth * .7 ) {
@@ -77,6 +81,7 @@ class Ship {
             this.y = window.innerHeight * .8
         }
 
+        
     }
 }
 

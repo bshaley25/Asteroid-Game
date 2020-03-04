@@ -4,6 +4,11 @@ canvas.height = (window.innerHeight * .8)
 document.body.appendChild(canvas)
 const c = canvas.getContext('2d')
 
+const score = document.querySelector('h1')
+
+
+let time = Date.now()
+
 let asteriodImg = new Image();
 asteriodImg.src = './img/animated_asteroid2.png';
 let asteriodArray = []
@@ -66,15 +71,18 @@ function clearController() {
 function gameAnimate() {
 
     asteriodArray.forEach(asteriod => {
-
         if (!asteriod.isHit) {
             asteriod.draw()
             asteriod.update()
-        }
+        } 
     });
 
     explArray.forEach(explosion => {
-        explosion.draw()
+
+        if (!explosion.isDone) {
+            explosion.draw()
+            explosion.update()
+        }
     })
 
     beamArray.forEach(beam => {
@@ -90,6 +98,9 @@ function gameAnimate() {
         shipExplosion.draw()
         shipExplosion.update()
     }
+
+    score.innerText = ship.score
+
 }
 
 function animate() {
@@ -99,7 +110,6 @@ function animate() {
     clearController()
 
     localStorage.setItem('id', requestAnimationFrame(animate))
-
 }
 
 const restartButton = document.querySelector(".start")
@@ -114,6 +124,5 @@ restartButton.addEventListener("click", () => {
     ship = new Ship()
     makeAsteriods()
     animate()
-
 })
 

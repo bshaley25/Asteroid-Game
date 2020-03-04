@@ -75,6 +75,7 @@ function gameAnimate() {
 
     explArray.forEach(explosion => {
         explosion.draw()
+        explosion.update()
     })
 
     beamArray.forEach(beam => {

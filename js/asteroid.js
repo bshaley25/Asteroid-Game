@@ -50,7 +50,7 @@ class Asteriod {
                 let e = new Explosion()
                 e.x = this.x
                 e.y = this.y
-                explArray.push( e )
+                explArray.push(e)
             } 
 
         })

@@ -1,8 +1,8 @@
 class Asteriod {
 
     constructor() {
-        this.x = (Math.random() * (canvas.width - (width*2)) + (width*2))
-        this.y = (Math.random() * (canvas.height- (height*3)) + (height*2))
+        this.x = (Math.random() * (canvas.width - (width*2)) + (width*2)) || 100
+        this.y = 100 // (Math.random() * (canvas.height- (height*3)) + (height*2)) || 100
         this.dx = (Math.random() * 10) - 5 
         this.dy = (Math.random() * 10) - 5 
         this.frameX = Math.floor( Math.random() * 6 )
@@ -26,10 +26,10 @@ class Asteriod {
             }
         }
         
-        if(this.x < (width/2) || this.x > (canvas.width - (width/2))) {
+        if(this.x < ((width/2) - 200 ) || this.x > (canvas.width - (width/2)) + 200) {
             this.dx *= -1
         }
-        if(this.y < (height/2) || this.y > (canvas.height - (height/2))) {
+        if(this.y < (height/2)- 200 || this.y > (canvas.height - (height/2)) + 200) {
             this.dy *= -1
         }
         
@@ -51,6 +51,8 @@ class Asteriod {
                 e.x = this.x
                 e.y = this.y
                 explArray.push(e)
+                asteriodArray.push(new Asteriod)
+                ship.score++
             } 
 
         })

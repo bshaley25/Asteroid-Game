@@ -5,6 +5,7 @@ class Explosion {
         this.y = undefined
         this.fx = 0
         this.fy = 0
+        this.isDone = false
     }
 
     draw() {
@@ -19,6 +20,7 @@ class Explosion {
             this.fy++  //go to next line once the first sprite sheet row has been exhuasted
             if(this.fy == 7){
                 this.fy = 0
+                this.isDone = true
             }
         }
     }

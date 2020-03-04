@@ -8,6 +8,7 @@ class Ship {
         this.fx = 0 // frame 
         this.fy = 0
         this.theta = undefined
+        this.score = 0
     }
 
     draw() {

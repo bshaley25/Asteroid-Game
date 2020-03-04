@@ -1,8 +1,8 @@
 class Ship {
 
     constructor() {
-        this.x = 200 // x position
-        this.y = 200 // y position
+        this.x = canvas.width/2 // x position // starts in middle
+        this.y = canvas.height/2 // y position
         this.dx = 0 // change in x
         this.dy = 0 // change in y
         this.fx = 0 // frame 
@@ -70,16 +70,16 @@ class Ship {
 
         }
 
-        if (this.x > window.innerWidth * .7 ) {
+        if (this.x < 0) {
+            this.x = canvas.width
+        } else if (this.x > canvas.width) {
             this.x = 0
-        } else if (this.x < 0) {
-            this.x = window.innerWidth * .7
         }
         
-        if (this.y > window.innerHeight * .8) {
+        if (this.y < 0) {
+            this.y = canvas.height
+        } else if (this.y > canvas.height) {
             this.y = 0
-        } else if (this.y < 0) {
-            this.y = window.innerHeight * .8
         }
     }
 }

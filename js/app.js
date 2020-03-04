@@ -1,18 +1,17 @@
 let canvas = document.createElement('canvas')
-canvas.width = (window.innerWidth * .7)
-canvas.height = (window.innerHeight * .8)
+canvas.width = (window.innerWidth * .9)
+canvas.height = (window.innerHeight * .9)
 document.body.appendChild(canvas)
 const c = canvas.getContext('2d')
 
 const score = document.querySelector('h1')
-
 
 let time = Date.now()
 
 let asteriodImg = new Image();
 asteriodImg.src = './img/animated_asteroid2.png';
 let asteriodArray = []
-let astroidNumber = document.querySelector('#quantity').value
+let astroidNumber = 5
 const scale = 1;
 const width = 60;
 const height = 60;
@@ -44,13 +43,18 @@ let beamArray = []
 
 
 const controller = {
-    button: undefined,
+    leftArrow: undefined,
+    rightArrow: undefined,
+    upArrow: undefined,
+    downArrow: undefined,
+    spaceButton: undefined,
     shipX: undefined,
     shipY: undefined, 
     crashed: false,
+    gameEnd: 0
 }
 
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function(event) {  //event listener for up arrow.
     controller.button = event.key
 })
 
@@ -68,61 +72,109 @@ function clearController() {
     controller.button = undefined
 }
 
-function gameAnimate() {
+function updateScore() {
+    c.font = "50px Comic Sans";
+    c.fillText(`${ship.score}`, 50, 70)
+    c.fillStyle = 'White'
+}
 
+function DisplayScore() {
+    c.font = "100px Comic Sans";
+    c.fillText(`Your Score: ${ship.score}`, canvas.width/3, canvas.height/2.2)
+    c.fillText('Click to save score!', canvas.width/3.7, canvas.height/1.7)
+    c.fillStyle = 'White'
+    
+}
+
+function gameAnimate() {
+    
     asteriodArray.forEach(asteriod => {
         if (!asteriod.isHit) {
             asteriod.draw()
             asteriod.update()
         } 
     });
-
+    
     explArray.forEach(explosion => {
-
+        
         if (!explosion.isDone) {
             explosion.draw()
             explosion.update()
         }
     })
-
+    
     beamArray.forEach(beam => {
         beam.draw()
         beam.update()
         beam.delete()   //deletes if lifespan of beam is greater than 60 frames
     })
-
+    
     if (!controller.crashed) {
         ship.draw()
         ship.update()
+        updateScore()
     } else {
         shipExplosion.draw()
         shipExplosion.update()
+        DisplayScore()
+        
+        controller.gameEnd === 0 ? controller.gameEnd++ : null
+        controller.gameEnd === 1 ? fire() : null
     }
-
-    score.innerText = ship.score
-
 }
 
-function animate() {
+function fire() {
+    controller.gameEnd++
+}
 
+
+function animate() {
+    
     clearCanvas()
     gameAnimate()
     clearController()
-
+    
     localStorage.setItem('id', requestAnimationFrame(animate))
 }
 
-const restartButton = document.querySelector(".start")
 
-restartButton.addEventListener("click", () => {
+canvas.addEventListener("click", () => {
+    
+    if (controller.crashed === true) {
+        saveGame()
+    } else {
+        startgame()
+    }
+})
 
+function saveGame() {
+    console.log("butts")
+    startgame()
+}
+
+function startgame() {
     cancelAnimationFrame(localStorage.id)
-    astroidNumber = document.querySelector('#quantity').value
+    astroidNumber = 5
     controller.crashed = false
+    controller.gameEnd = 0
     asteriodArray = []
     beamArray = []
     ship = new Ship()
     makeAsteriods()
     animate()
-})
+    frontDisplay(false)
+}
+
+function frontDisplay(boolean) {
+    if (boolean) {
+        c.font = "100px Comic Sans";
+        c.fillStyle = 'White';
+        c.fillText(`Click to Start The Game!`, canvas.width/5, canvas.height/2.2)
+        c.fill()
+        console.log('butts')
+    }
+}
+
+frontDisplay(true)
+
 

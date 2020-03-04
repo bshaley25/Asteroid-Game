@@ -9,6 +9,7 @@ class Asteriod {
         this.frameY = Math.floor( Math.random()* 1.99 )
         this.spinSpeed = Math.floor( Math.random()* 10 ) + 3
         this.frameNumber = Math.floor( Math.random()* 6 )
+        this.isHit = false
     }
 
     draw() {
@@ -37,59 +38,24 @@ class Asteriod {
         this.y += this.dy
      
         if( (Math.abs(ship.x - this.x) < 40) && (Math.abs(ship.y - this.y) < 40) ) {
-            e1.x = ship.x
-            e1.y = ship.y
+            shipExplosion.x = ship.x
+            shipExplosion.y = ship.y
             controller.crashed = true
-        }
+        } 
+
+        beamArray.forEach(beam => {
+
+            if ( (Math.abs(beam.x - this.x) < 40) && (Math.abs(beam.y - this.y) < 40) ) {
+                this.isHit = true
+                let e = new Explosion()
+                e.x = this.x
+                e.y = this.y
+                explArray.push( e )
+            } 
+
+        })
+
 
     }
 
 }
-
-
-
-// function Asteriod( x, y, dx, dy, frameX, frameY, spinSpeed, frameNumber) {
-    
-//     this.x = x
-//     this.y = y
-//     this.dx = dx
-//     this.dy = dy
-//     this.frameX = frameX
-//     this.frameY = frameY
-//     this.spinSpeed = spinSpeed
-//     this.frameNumber = frameNumber
-    
-//     this.draw = function() {
-//         c.drawImage(asteriodImg, width * frameX, height * frameY, width, height, (x - width/2), (y - height/2) , scaledWidth, scaledHeight);
-//     }
-    
-//     this.update = function() {        
-        
-//         if (frameNumber % spinSpeed == 0) {
-//             if(frameX == 15) {
-//                 frameX = 0
-//             } else {
-//                 frameX++
-//             }
-//         }
-        
-//         if(x < (width/2) || x > (canvas.width - (width/2))) {
-//             dx = -dx
-            
-//         }
-//         if(y < (height/2) || y > (canvas.height - (height/2))) {
-//             dy = -dy
-//         }
-
-//         if( (Math.abs(controller.shipX - x) < 40) && (Math.abs(controller.shipY - y) < 40) ) {
-//             controller.crashed = true
-//         }
-        
-//         frameNumber++
-//         x+=dx
-//         y+=dy
-
-//         console.log("IN UPDATE",dx,dy)
-        
-//     }
-// }

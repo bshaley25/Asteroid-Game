@@ -19,7 +19,6 @@ class Beam {
         this.y -= Math.cos(this.theta)*this.dy
         
         this.time++
-        console.log(this.time)
     }
 
     delete() {

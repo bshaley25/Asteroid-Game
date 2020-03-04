@@ -30,7 +30,7 @@ explImage.src = './img/boom3.png'
 const explScale = 1;
 const explWidth = 128;
 const explHeight = 128;
-const e1 = new Explosion()
+const shipExplosion = new Explosion()
 let explArray = []
 
 let beamImage = new Image()
@@ -66,9 +66,16 @@ function clearController() {
 function gameAnimate() {
 
     asteriodArray.forEach(asteriod => {
-        asteriod.draw()
-        asteriod.update()
+
+        if (!asteriod.isHit) {
+            asteriod.draw()
+            asteriod.update()
+        }
     });
+
+    explArray.forEach(explosion => {
+        explosion.draw()
+    })
 
     beamArray.forEach(beam => {
         beam.draw()
@@ -80,10 +87,9 @@ function gameAnimate() {
         ship.draw()
         ship.update()
     } else {
-        e1.draw()
-        e1.update()
+        shipExplosion.draw()
+        shipExplosion.update()
     }
-    
 }
 
 function animate() {

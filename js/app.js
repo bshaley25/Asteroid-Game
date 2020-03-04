@@ -6,16 +6,6 @@ const c = canvas.getContext('2d')
 
 let asteriodImg = new Image();
 asteriodImg.src = './img/animated_asteroid2.png';
-
-let shipImage = new Image()
-shipImage.src = './img/spaceShip.png'
-
-let explImage = new Image()
-explImage.src = './img/boom3.png'
-
-let beamImage = new Image()
-beamImage.src = './img/beams.png'
-
 let asteriodArray = []
 let astroidNumber = document.querySelector('#quantity').value
 const scale = 1;
@@ -26,6 +16,8 @@ const scaledHeight = scale * height;
 const windowWidthScale = (window.innerWidth * .15)
 const windowHeightScale = (window.innerHeight * .1)
 
+let shipImage = new Image()
+shipImage.src = './img/spaceShip.png'
 const shipScale = 1;
 const shipWidth = 64;
 const shipeHeight = 64;
@@ -33,11 +25,18 @@ const shipScaledWidth =  shipScale * shipWidth;
 const shipScaledHeight = shipScale * shipeHeight;
 const shipMaxDxDy = 20;
 
+let explImage = new Image()
+explImage.src = './img/boom3.png'
 const explScale = 1;
 const explWidth = 128;
 const explHeight = 128;
-
 const e1 = new Explosion()
+let explArray = []
+
+let beamImage = new Image()
+beamImage.src = './img/beams.png'
+let beamArray = []
+
 
 const controller = {
     button: undefined,
@@ -71,6 +70,12 @@ function gameAnimate() {
         asteriod.update()
     });
 
+    beamArray.forEach(beam => {
+        beam.draw()
+        beam.update()
+        beam.delete()   //deletes if lifespan of beam is greater than 60 frames
+    })
+
     if (!controller.crashed) {
         ship.draw()
         ship.update()
@@ -99,8 +104,8 @@ restartButton.addEventListener("click", () => {
     astroidNumber = document.querySelector('#quantity').value
     controller.crashed = false
     asteriodArray = []
+    beamArray = []
     ship = new Ship()
-    beam = new Beam()
     makeAsteriods()
     animate()
 

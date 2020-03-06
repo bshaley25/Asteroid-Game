@@ -7,7 +7,15 @@ body {
 
 a {
     font-family: 'Oxanium', cursive;
+    color: black;
     padding-left: 5%;
+    text-decoration: none;
+    transition-duration: .25s;
+}
+
+a:hover {
+    font-size: 2.2rem;
+    color: blue;
 }
 
 canvas {

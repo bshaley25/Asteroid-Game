@@ -1,6 +1,6 @@
 let canvas = document.createElement('canvas')
 canvas.width = (window.innerWidth * .9)
-canvas.height = (window.innerHeight * .9)
+canvas.height = (window.innerHeight * .85)
 document.body.appendChild(canvas)
 const c = canvas.getContext('2d')
 

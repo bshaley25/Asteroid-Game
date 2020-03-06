@@ -2,7 +2,7 @@ const ul = document.querySelector('ul')
 const a = document.querySelector('a')
 a.innerText = '<-- Go Back To Game'
 
-fetch('http://localhost:5000')
+fetch('https://asteroid-backend.herokuapp.com/')
 .then(res => res.json())
 .then(highScoreListItems)
 

@@ -152,7 +152,7 @@ function saveGame() {
 
     let currentScore = ship.score
 
-    fetch('http://localhost:5000')
+    fetch('https://asteroid-backend.herokuapp.com/')
     .then(res => res.json())
     .then(data => {
         console.log(currentScore)
@@ -160,7 +160,7 @@ function saveGame() {
         console.log(lowestRankedScore)
         if (currentScore > lowestRankedScore) {
             console.log('highscore threshold met')
-            fetch('http://localhost:5000', {
+            fetch('https://asteroid-backend.herokuapp.com/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

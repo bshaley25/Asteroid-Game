@@ -6,8 +6,6 @@ const c = canvas.getContext('2d')
 
 const score = document.querySelector('h1')
 
-let time = Date.now()
-
 let asteriodImg = new Image();
 asteriodImg.src = './img/animated_asteroid2.png';
 let asteriodArray = []
@@ -51,7 +49,8 @@ const controller = {
     shipX: undefined,
     shipY: undefined, 
     crashed: false,
-    gameEnd: 0
+    gameEnd: 0,
+    score: 0
 }
 
 document.addEventListener('keydown', function(event) {  //event listener for up arrow.
@@ -73,17 +72,18 @@ function clearController() {
 }
 
 function updateScore() {
-    c.font = "50px Comic Sans";
+    c.font = "50px Oxanium";
     c.fillText(`${ship.score}`, 50, 70)
     c.fillStyle = 'White'
+    
 }
 
-function DisplayScore() {
-    c.font = "100px Comic Sans";
+function displayScore() {
+    c.font = "100px Oxanium";
     c.fillText(`Your Score: ${ship.score}`, canvas.width/3, canvas.height/2.2)
-    c.fillText('Click to save score!', canvas.width/3.7, canvas.height/1.7)
+    c.fillText('Click to save score', canvas.width/3.7, canvas.height/1.7)
+    c.fillText('and play again!', canvas.width/3.2, canvas.height/1.4)
     c.fillStyle = 'White'
-    
 }
 
 function gameAnimate() {
@@ -116,11 +116,12 @@ function gameAnimate() {
     } else {
         shipExplosion.draw()
         shipExplosion.update()
-        DisplayScore()
+        displayScore()
         
         controller.gameEnd === 0 ? controller.gameEnd++ : null
         controller.gameEnd === 1 ? fire() : null
     }
+
 }
 
 function fire() {
@@ -133,7 +134,6 @@ function animate() {
     clearCanvas()
     gameAnimate()
     clearController()
-    
     localStorage.setItem('id', requestAnimationFrame(animate))
 }
 
@@ -145,10 +145,31 @@ canvas.addEventListener("click", () => {
     } else {
         startgame()
     }
+    
 })
 
 function saveGame() {
-    console.log("butts")
+
+    let currentScore = ship.score
+
+    fetch('http://localhost:5000')
+    .then(res => res.json())
+    .then(data => {
+        console.log(currentScore)
+        let lowestRankedScore = data[data.length - 1].score
+        console.log(lowestRankedScore)
+        if (currentScore > lowestRankedScore) {
+            console.log('highscore threshold met')
+            fetch('http://localhost:5000', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({score: currentScore}),
+                })
+                .then(res => res.json())
+        }
+    })
     startgame()
 }
 
@@ -157,6 +178,7 @@ function startgame() {
     astroidNumber = 5
     controller.crashed = false
     controller.gameEnd = 0
+    controller.score = 0
     asteriodArray = []
     beamArray = []
     ship = new Ship()
@@ -167,14 +189,12 @@ function startgame() {
 
 function frontDisplay(boolean) {
     if (boolean) {
-        c.font = "100px Comic Sans";
+        c.font = "100px Oxanium";
         c.fillStyle = 'White';
         c.fillText(`Click to Start The Game!`, canvas.width/5, canvas.height/2.2)
         c.fill()
-        console.log('butts')
     }
 }
 
 frontDisplay(true)
-
 

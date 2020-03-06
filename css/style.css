@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Oxanium&display=swap');
+
+body {
+    margin: 0;
+    background-color: bisque;
+}
+
+a {
+    font-family: 'Oxanium', cursive;
+    padding-left: 5%;
+}
+
+canvas {
+    display: block;
+    padding: 0;
+    margin: auto;
+    height: 90%;
+    width: 90%;
+    background-image: url('../img/spacebackground.jpg');
+    border-style: solid;
+    border-radius: 10px;
+    font-family: 'Oxanium', cursive;
+}

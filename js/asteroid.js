@@ -2,7 +2,7 @@ class Asteriod {
 
     constructor() {
         this.x = (Math.random() * (canvas.width - (width*2)) + (width*2)) || 100
-        this.y = 100 // (Math.random() * (canvas.height- (height*3)) + (height*2)) || 100
+        this.y = -100 // (Math.random() * (canvas.height- (height*3)) + (height*2)) || 100
         this.dx = (Math.random() * 10) - 5 
         this.dy = (Math.random() * 10) - 5 
         this.frameX = Math.floor( Math.random() * 6 )

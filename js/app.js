@@ -7,7 +7,7 @@ const c = canvas.getContext('2d')
 const score = document.querySelector('h1')
 
 let asteriodImg = new Image();
-asteriodImg.src = './img/animated_asteroid2.png';
+asteriodImg.src = '../img/animated_asteroid2.png';
 let asteriodArray = []
 let astroidNumber = 5
 const scale = 1;
@@ -19,7 +19,7 @@ const windowWidthScale = (window.innerWidth * .15)
 const windowHeightScale = (window.innerHeight * .1)
 
 let shipImage = new Image()
-shipImage.src = './img/spaceShip.png'
+shipImage.src = '../img/spaceShip.png'
 const shipScale = 1;
 const shipWidth = 64;
 const shipeHeight = 64;
@@ -28,7 +28,7 @@ const shipScaledHeight = shipScale * shipeHeight;
 const shipMaxDxDy = 20;
 
 let explImage = new Image()
-explImage.src = './img/boom3.png'
+explImage.src = '../img/boom3.png'
 const explScale = 1;
 const explWidth = 128;
 const explHeight = 128;
@@ -36,7 +36,7 @@ const shipExplosion = new Explosion()
 let explArray = []
 
 let beamImage = new Image()
-beamImage.src = './img/beams.png'
+beamImage.src = '../img/beams.png'
 let beamArray = []
 
 

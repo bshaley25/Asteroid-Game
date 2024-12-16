@@ -9,5 +9,3 @@ The controls are as follows:
 -Spacebar fires laser  
 
 Those are the basic rules, [now see if you can play to get a high score!](https://brads-asteroid-game.firebaseapp.com/)
-
-this is a test
